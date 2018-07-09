@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aiohttp = "*"
+graphene = "*"
+peony-twitter = "*"
+aiohttp-cors = "*"
+graphql-ws = "*"
+black = "*"
+
+[dev-packages]
+black = "*"
+"flake8" = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
