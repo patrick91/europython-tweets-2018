@@ -1,0 +1,61 @@
+.tweet-wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+    background-image: repeating-linear-gradient( 45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.2) 35px, rgba(255, 255, 255, 0.2) 70px), repeating-linear-gradient( -45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.4) 35px, rgba(255, 255, 255, 0.4) 70px);
+    background-attachment: fixed;
+}
+
+.tweet-wrapper svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.tweet {
+    position: absolute;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 3vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.5em;
+    font-family: Karma;
+    font-weight: 300;
+}
+
+.tweet p {
+    margin-bottom: 0.5em;
+}
+
+.tweet p a {
+    color: inherit;
+    font-weight: strong;
+}
+
+.tweet-wrapper img {
+    position: absolute;
+    max-width: 60vw;
+    max-height: 45vh;
+    height: auto;
+    width: auto;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.6);
+    bottom: -100%;
+    right: 2vw;
+    animation: image 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes image {
+    100% {
+        bottom: 2vh;
+    }
+}
