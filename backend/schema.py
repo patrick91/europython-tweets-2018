@@ -4,15 +4,21 @@ import graphene
 
 QUESTIONS = [
     "Do you know that PyCon Italy will be on the 19th of April 2018?",
-    "Have you been to Florence?"
+    "Have you been to Florence?",
 ]
 
 
+class TweetMedia(graphene.ObjectType):
+    media_url_https = graphene.String()
+
+
 class Tweet(graphene.ObjectType):
+    id = graphene.String()
     text = graphene.String()
     username = graphene.String()
     created_at = graphene.String()
     profile_image = graphene.String()
+    media = graphene.List(graphene.NonNull(TweetMedia))
 
 
 class Question(graphene.ObjectType):
@@ -57,20 +63,26 @@ class Subscription(graphene.ObjectType):
     tweets = graphene.Field(Tweet)
 
     async def resolve_tweets(root, info):
-        service = info.context['service']
+        service = info.context["service"]
 
         while True:
             if service._last_tweet:
                 tweet = service._last_tweet
 
                 yield Tweet(
+                    id=tweet.id_str,
                     text=tweet.text,
                     username=tweet.user.screen_name,
                     created_at=tweet.created_at,
-                    profile_image=tweet.user.profile_image_url_https, )
+                    profile_image=tweet.user.profile_image_url_https,
+                    media=tweet.entities.media
+                    if "media" in tweet.entities
+                    else [],
+                )
 
             await asyncio.sleep(0.2)
 
 
 schema = graphene.Schema(
-    query=Query, mutation=Mutation, subscription=Subscription)
+    query=Query, mutation=Mutation, subscription=Subscription
+)

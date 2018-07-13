@@ -20,7 +20,7 @@ export class TweetBubble extends React.Component {
   }
 
   render() {
-    const { image, text, author } = this.props.tweet;
+    const { media, text, author } = this.props.tweet;
     return (
       <div className="tweet-wrapper">
         <svg ref={this.svg} />
@@ -31,7 +31,7 @@ export class TweetBubble extends React.Component {
           <strong>{author}</strong>
         </div>
 
-        {image && <img src="https://source.unsplash.com/random" />}
+        {media.length > 0 && <img src={media[0].url} />}
       </div>
     );
   }
