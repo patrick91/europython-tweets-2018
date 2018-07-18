@@ -38,6 +38,7 @@ const generatePoints = ({ x, y, width, height, maxPoints, sorting }) => {
       multY = -1;
       startDeltaY = height - paddingX;
       break;
+    default:
     case "-x":
       startDeltaY = paddingX;
       break;
