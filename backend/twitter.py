@@ -8,7 +8,7 @@ class Client(PeonyClient):
 @Client.event_stream
 class UserStream(EventStream):
     def stream_request(self):
-        return self.stream.statuses.filter.post(track="hello")
+        return self.stream.statuses.filter.post(track="#europython,#ep2018")
 
     @events.on_tweet.handler
     def tweet(self, data):
