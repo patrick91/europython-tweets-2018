@@ -71,4 +71,5 @@ subscription_server = MyWebSocketSubscriptionServer(schema, client)
 
 asyncio.ensure_future(client.run_tasks())
 
-web.run_app(app, port=8000)
+if __name__ == "__main__":
+    web.run_app(app, port=8000)
