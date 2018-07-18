@@ -10,6 +10,7 @@ peony-twitter = "*"
 aiohttp-cors = "*"
 graphql-ws = "*"
 black = "*"
+gunicorn = "*"
 
 [dev-packages]
 black = "*"
@@ -20,3 +21,6 @@ python_version = "3.7"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+start = "gunicorn app:app --bind localhost:8080 --worker-class aiohttp.GunicornWebWorker"
