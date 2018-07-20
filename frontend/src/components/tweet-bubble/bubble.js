@@ -151,15 +151,18 @@ export const createBubble = (svg, tweet, debug = false) => {
     svg.removeChild(svg.firstChild);
   }
 
-  const bbox = svg.getBoundingClientRect();
+  const bbox = tweet.getBoundingClientRect();
+
+  const padding = 80;
 
   const { width, height } = bbox;
 
-  svg.setAttribute("viewbox", `0 0 ${width} ${height}`);
+  const wrapperWidth = width + padding * 2;
+  const wrapperHeight = height + padding * 2;
 
-  const textWidth = width - 200;
-
-  tweet.style.width = `${textWidth - 150}px`;
+  svg.setAttribute("viewbox", `0 0 ${wrapperWidth} ${wrapperHeight}`);
+  svg.style.width = `${wrapperWidth}px`;
+  svg.style.height = `${wrapperHeight}px`;
 
   svg.innerHTML = `<defs>
     <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -171,9 +174,9 @@ export const createBubble = (svg, tweet, debug = false) => {
   const path = generate({
     svg,
     element: tweet,
-    width,
-    height,
-    textWidth,
+    width: wrapperWidth,
+    height: wrapperHeight,
+    textWidth: width,
     debug
   });
 
