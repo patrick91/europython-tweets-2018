@@ -20,15 +20,17 @@ export class TweetBubble extends React.Component {
   }
 
   render() {
-    const { media, text, author } = this.props.tweet;
+    const { media, text, username } = this.props.tweet;
     return (
       <div className="tweet-wrapper">
         <svg ref={this.svg} />
 
         <div className="tweet" ref={this.tweet}>
-          <p dangerouslySetInnerHTML={{ __html: htmlTweet()(text) }} />
-
-          <strong>{author}</strong>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: `<strong>@${username}</strong> ${htmlTweet()(text)}`
+            }}
+          />
         </div>
 
         {media.length > 0 && <img src={media[0].url} alt="" />}
