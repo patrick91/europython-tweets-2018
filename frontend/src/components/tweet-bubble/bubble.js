@@ -10,95 +10,80 @@ const randomBetween = (a, b) => {
 
 const generatePoints = ({ x, y, width, height, maxPoints, sorting }) => {
   const axis = sorting.replace("-", "");
-
-  const length = axis === "x" ? width : height;
-  const distance = length / maxPoints;
+  const distanceX = width / maxPoints;
+  const distanceY = height / maxPoints;
 
   const points = [];
 
-  const paddingX = 40;
-  const paddingY = 20;
+  let currentX = axis === "y" ? x + width / 2 : x + distanceX / 2;
+  let currentY = axis === "x" ? y + height / 2 : y + distanceY / 2;
 
-  let startDeltaX = 0;
-  let startDeltaY = 0;
-  let multX = 1;
-  let multY = 1;
-
-  switch (
-    sorting // eslint-disable-line
-  ) {
-    case "y":
-      startDeltaX = paddingY;
-      break;
-    case "-y":
-      multX = -1;
-      startDeltaX = width;
-      break;
-    case "x":
-      multY = -1;
-      startDeltaY = height - paddingX;
-      break;
-    default:
-    case "-x":
-      startDeltaY = paddingX;
-      break;
-  }
-
-  let currentX = x + (axis === "y" ? startDeltaX : -distance / 2);
-  let currentY = y + (axis === "x" ? startDeltaY : -distance / 2);
+  const randX = axis === "x" ? 0 : distanceX / 3;
+  const randY = axis === "y" ? 0 : distanceY / 3;
 
   for (let i = 0; i < maxPoints; i += 1) {
-    currentX += axis === "x" ? distance : 0;
-    currentY += axis === "y" ? distance : 0;
-
     points.push([
-      currentX + multX * randomBetween(0, paddingX),
-      currentY + multY * randomBetween(0, paddingY)
+      currentX + randomBetween(-randX, randX),
+      currentY + randomBetween(-randY, randY)
     ]);
+
+    currentX += axis === "x" ? distanceX : 0;
+    currentY += axis === "y" ? distanceY : 0;
   }
 
   return points;
 };
 
-const generate = ({ svg, element, width, height, textWidth, debug }) => {
-  const elementBBox = element.getBoundingClientRect();
-
-  const textHeight = elementBBox.height;
-
+const generate = ({
+  svg,
+  element,
+  width,
+  height,
+  textWidth,
+  textHeight,
+  padding,
+  debug
+}) => {
   const top = (height - textHeight) / 2;
   const left = (width - textWidth) / 2;
+
+  const boxHeight = top - padding / 2;
+
+  const sideBoxWidth = left / 2;
+  const sideBoxHeight = height / 2;
 
   const boxes = [
     {
       x: left,
-      y: 0,
+      y: padding / 2,
       width: textWidth,
-      height: top,
+      height: boxHeight,
       maxPoints: 3,
+      debugColor: "purple",
       sorting: "x"
     },
     {
       x: width - left,
-      y: top - 20,
-      width: left,
-      height: textHeight + 40,
-      maxPoints: 2,
+      y: (height - sideBoxHeight) / 2,
+      width: sideBoxWidth,
+      height: sideBoxHeight,
+      maxPoints: 3,
       sorting: "y"
     },
     {
       x: left,
       y: height - top,
       width: textWidth,
-      height: top,
+      height: boxHeight,
       maxPoints: 2,
       sorting: "-x"
     },
     {
-      x: 0,
-      y: top - 20,
-      width: left,
-      height: textHeight + 40,
-      maxPoints: 2,
+      x: left - sideBoxWidth,
+      y: (height - sideBoxHeight) / 2,
+      width: sideBoxWidth,
+      height: sideBoxHeight,
+      maxPoints: 3,
       sorting: "-y",
       fill: "yellow"
     }
@@ -112,7 +97,7 @@ const generate = ({ svg, element, width, height, textWidth, debug }) => {
     if (debug) {
       svg.appendChild(
         createRect({
-          fill: "blue",
+          fill: box.debugColor || "blue",
           ...box
         })
       );
@@ -177,6 +162,8 @@ export const createBubble = (svg, tweet, debug = false) => {
     width: wrapperWidth,
     height: wrapperHeight,
     textWidth: width,
+    textHeight: height,
+    padding: padding,
     debug
   });
 
