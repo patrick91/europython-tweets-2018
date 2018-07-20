@@ -11,3 +11,9 @@ body {
   background-image: repeating-linear-gradient( 45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.2) 35px, rgba(255, 255, 255, 0.2) 70px), repeating-linear-gradient( -45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.4) 35px, rgba(255, 255, 255, 0.4) 70px);
   background-attachment: fixed;
 }
+
+#root {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
