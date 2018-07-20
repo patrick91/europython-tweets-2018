@@ -32,8 +32,6 @@ export class TweetBubble extends React.Component {
             }}
           />
         </div>
-
-        {media.length > 0 && <img src={media[0].url} alt="" />}
       </div>
     );
   }
