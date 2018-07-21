@@ -1,8 +1,10 @@
+import collections
+
 from peony import EventStream, PeonyClient, events
 
 
 class Client(PeonyClient):
-    pass
+    last_tweets = collections.deque(maxlen=10)
 
 
 @Client.event_stream
@@ -15,7 +17,7 @@ class UserStream(EventStream):
 
     @events.on_tweet.handler
     def tweet(self, data):
-        Client._last_tweet = data
+        Client.last_tweets.append(data)
 
 
 client = Client(

@@ -24,3 +24,4 @@ allow_prereleases = true
 
 [scripts]
 start = "gunicorn app:app --bind localhost:8080 --worker-class aiohttp.GunicornWebWorker"
+dev = "python app.py"

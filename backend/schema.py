@@ -59,26 +59,33 @@ class Mutation(graphene.ObjectType):
     answer_question = AnswerQuestion.Field()
 
 
+def convert_tweet(tweet):
+    return Tweet(
+        id=tweet.id_str,
+        text=tweet.text,
+        username=tweet.user.screen_name,
+        created_at=tweet.created_at,
+        profile_image=tweet.user.profile_image_url_https,
+        media=tweet.entities.media if "media" in tweet.entities else [],
+    )
+
+
 class Subscription(graphene.ObjectType):
     tweets = graphene.Field(Tweet)
 
     async def resolve_tweets(root, info):
         service = info.context["service"]
 
-        while True:
-            if service._last_tweet:
-                tweet = service._last_tweet
+        tweets = service.last_tweets
 
-                yield Tweet(
-                    id=tweet.id_str,
-                    text=tweet.text,
-                    username=tweet.user.screen_name,
-                    created_at=tweet.created_at,
-                    profile_image=tweet.user.profile_image_url_https,
-                    media=tweet.entities.media
-                    if "media" in tweet.entities
-                    else [],
-                )
+        for tweet in tweets:
+            yield convert_tweet(tweet)
+
+        while True:
+            if len(tweets) > 0:
+                tweet = tweets[-1]
+
+                yield convert_tweet(tweet)
 
             await asyncio.sleep(0.2)
 
