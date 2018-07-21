@@ -25,6 +25,7 @@
     padding: 0.5em;
     font-family: Karma;
     font-weight: 300;
+    min-width: 400px;
 }
 
 .tweet p {
