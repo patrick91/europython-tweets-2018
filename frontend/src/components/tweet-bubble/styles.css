@@ -40,21 +40,8 @@
     font-weight: strong;
 }
 
-.tweet-wrapper img {
-    position: absolute;
-    max-width: 60vw;
-    max-height: 45vh;
-    height: auto;
-    width: auto;
-    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.6);
-    bottom: -100%;
-    right: 2vw;
-    animation: image 1s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes image {
-    100% {
-        bottom: 2vh;
-    }
+.tweet p img {
+    height: 1em;
+    position: relative;
+    top: 0.3em;
 }

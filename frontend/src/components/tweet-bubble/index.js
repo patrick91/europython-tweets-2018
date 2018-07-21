@@ -1,6 +1,8 @@
 import React from "react";
 import htmlTweet from "html-tweet";
 
+import twemoji from "twemoji";
+
 import { createBubble } from "./bubble";
 
 import "./styles.css";
@@ -20,7 +22,10 @@ export class TweetBubble extends React.Component {
   }
 
   render() {
-    const { media, text, username } = this.props.tweet;
+    const { text, username } = this.props.tweet;
+
+    const html = twemoji.parse(htmlTweet()(text));
+
     return (
       <div className="tweet-wrapper">
         <svg ref={this.svg} />
@@ -28,7 +33,7 @@ export class TweetBubble extends React.Component {
         <div className="tweet" ref={this.tweet}>
           <p
             dangerouslySetInnerHTML={{
-              __html: `<strong>@${username}</strong>: ${htmlTweet()(text)}`
+              __html: `<strong>@${username}</strong>: ${html}`
             }}
           />
         </div>

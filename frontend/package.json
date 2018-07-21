@@ -12,7 +12,8 @@
     "react-apollo": "^2.1.9",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
-    "subscriptions-transport-ws": "^0.9.12"
+    "subscriptions-transport-ws": "^0.9.12",
+    "twemoji": "^11.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
