@@ -31,14 +31,14 @@ export class TweetsList extends React.Component {
           if (result.data && result.data.tweets) {
             this.setState(state => {
               const tweet = result.data.tweets;
-              const newTweets = [...state.tweets];
+              let newTweets = [...state.tweets];
 
               if (newTweets.filter(x => x.id === tweet.id).length === 0) {
                 if (newTweets.length >= 10) {
-                  newTweets.shift();
+                  newTweets.pop();
                 }
 
-                newTweets.push(tweet);
+                newTweets = [tweet, ...newTweets];
               }
 
               return {
