@@ -28,7 +28,7 @@ export class TweetBubble extends React.Component {
         <div className="tweet" ref={this.tweet}>
           <p
             dangerouslySetInnerHTML={{
-              __html: `<strong>@${username}</strong> ${htmlTweet()(text)}`
+              __html: `<strong>@${username}</strong>: ${htmlTweet()(text)}`
             }}
           />
         </div>
